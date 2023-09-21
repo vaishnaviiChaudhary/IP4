@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create your own T-shirt</title>
+</head>
+<body>
+    <h1 style="text-align:center">Create your own T-shirt</h1><br>
+    <form id="orderForm" onsubmit="return validateForm();">
+        <label for="tagline">Tagline on the Shirt:</label>
+        <input type="text" id="tagline" name="tagline" required><br><br>
+
+        <label for="color">Color:</label>
+        <select id="color" name="color" required>  
+            <option value="Orange">Orange</option>
+            <option value="Yellow">Yellow</option>
+            <option value="Pink">Pink</option>
+            <option value="Lavender">Lavender</option>
+            <option value="Black">Black</option>
+            <option value="White">White</option>
+            <option value="Red">Red</option>
+            <option value="Blue">Blue</option>
+            <option value="Green">Green</option>
+        </select><br><br>
+
+        <label for="size">Size:</label>
+        <input type="radio" id="size_xs" name="size" value="XS" required>
+        <label for="size_s">XS</label>
+        <input type="radio" id="size_s" name="size" value="S" required>
+        <label for="size_m">S</label>
+        <input type="radio" id="size_m" name="size" value="M" required>
+        <label for="size_l">M</label>
+        <input type="radio" id="size_l" name="size" value="L" required>
+        <label for="size_s">L</label>
+        <input type="radio" id="size_xl" name="size" value="XL" required>
+        <label for="size_m">XL</label>
+        <input type="radio" id="size_xll" name="size" value="XLL" required>
+        <label for="size_l">XLL</label><br><br>
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" min="1" required><br><br>
+
+        <label for="delivery_date">Delivery Date:</label>
+        <input type="date" id="delivery_date" name="delivery_date" required><br><br>
+
+        <label for="other_details">Other Details:</label>
+        <textarea id="other_details" name="other_details" rows="3"></textarea><br><br>
+
+        <input type="submit" value="Place Order">
+    </form>
+
+    <div id="receipt" style="display: none;">
+        <h2>Order Receipt</h2>
+        <p>Tagline on the Shirt: <span id="receiptTagline"></span></p>
+        <p>Color: <span id="receiptColor"></span></p>
+        <p>Size: <span id="receiptSize"></span></p>
+        <p>Quantity: <span id="receiptQuantity"></span></p>
+        <p>Delivery Date: <span id="receiptDeliveryDate"></span></p>
+        <p>Other Details: <span id="receiptOtherDetails"></span></p>
+        <p>Date of Receipt: <span id="receiptDate"></span></p>
+    </div>
+
+    <script>
+        function validateForm() {
+            // Get form elements
+            const tagline = document.getElementById("tagline").value;
+            const color = document.getElementById("color").value;
+            const size = document.querySelector('input[name="size"]:checked');
+            const quantity = document.getElementById("quantity").value;
+            const deliveryDate = document.getElementById("delivery_date").value;
+
+            // Add your validation logic here
+            // For example, you can check if the tagline length is within a specific limit, and if the quantity is a positive integer.
+
+            // If validation fails, prevent form submission
+            // Return false to prevent form submission
+            if (tagline.length > 50 || isNaN(quantity) || quantity <= 0) {
+                alert("Please check your input data.");
+                return false;
+            }
+
+            // If validation passes, display the receipt
+            const receipt = document.getElementById("receipt");
+            const receiptTagline = document.getElementById("receiptTagline");
+            const receiptColor = document.getElementById("receiptColor");
+            const receiptSize = document.getElementById("receiptSize");
+            const receiptQuantity = document.getElementById("receiptQuantity");
+            const receiptDeliveryDate = document.getElementById("receiptDeliveryDate");
+            const receiptOtherDetails = document.getElementById("receiptOtherDetails");
+            const receiptDate = document.getElementById("receiptDate");
+
+            receiptTagline.innerText = tagline;
+            receiptColor.innerText = color;
+            receiptSize.innerText = size ? size.value : "Not selected";
+            receiptQuantity.innerText = quantity;
+            receiptDeliveryDate.innerText = deliveryDate;
+            receiptOtherDetails.innerText = document.getElementById("other_details").value;
+
+            const currentDate = new Date();
+            receiptDate.innerText = currentDate.toLocaleDateString();
+
+            receipt.style.display = "block";
+
+            // Prevent the form from submitting (we've already processed the order)
+            return false;
+        }
+    </script>
+</body>
+</html>
